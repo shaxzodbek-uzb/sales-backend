@@ -15,6 +15,11 @@ class CreateBatchesTable extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('code')->nullable();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('price')->default(0);
+            $table->unsignedBigInteger('quantity')->default(0);
+            $table->datetime('performed_at');
             $table->timestamps();
         });
     }

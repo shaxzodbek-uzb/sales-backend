@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    
+    protected $fillable = ['sku', 'name'];
+
+    public function batches()
+    {
+        return $this->hasOne(Batch::class);
+    }
+    public function transactions()
+    {
+        return $this->hasOne(Transaction::class);
+    }
 }

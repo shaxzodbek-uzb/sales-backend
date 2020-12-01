@@ -15,6 +15,10 @@ class CreateBatchTransactionTable extends Migration
     {
         Schema::create('batch_transaction', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('batch_id');
+            $table->unsignedBigInteger('transaction_id');
+            $table->unsignedBigInteger('price')->default(0);
+            $table->unsignedBigInteger('quantity')->default(0);
             $table->timestamps();
         });
     }
