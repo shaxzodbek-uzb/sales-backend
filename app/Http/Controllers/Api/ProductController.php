@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Sales\Product\Services\ProductService;
 
 class ProductController extends Controller
 {
+    private $service;
+
+    public function __construct(ProductService $service) {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            'status' => 200,
+            'data' => $this->service->getAll()
+        ]);
     }
 
     /**

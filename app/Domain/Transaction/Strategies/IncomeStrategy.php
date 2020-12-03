@@ -26,7 +26,9 @@ class IncomeStrategy {
                 $batch = $this->batchService->createBatch([
                     'product_id' => $product['id'],
                     'quantity' => $product['quantity'],
-                    'price' => $product['price']
+                    'price' => $product['price'],
+                    'performed_at' => $product['date']??now(),
+                    'code' => $product['code']??null
                 ]);
                 $transaction->batches()->attach($batch, [
                     'price' => $product['price'], 

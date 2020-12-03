@@ -54,7 +54,10 @@ class TransactionStoreRequest extends FormRequest
                 'numeric',
                 'min:0',
             ],
-            "products.*.batch_code" => [
+            'products.*.date' => [
+                'date',
+            ],
+            "products.*.code" => [
                 "numeric",
             ]
         ];
