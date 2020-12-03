@@ -6,6 +6,7 @@ use DB;
 use Sales\Batch\Services\BatchService;
 use Sales\Transaction\Repositories\TransactionRepository;
 use Sales\Transaction\Resources\TransactionResource;
+use  Carbon\Carbon;
 
 class IncomeStrategy {
     private $repo;
@@ -21,13 +22,14 @@ class IncomeStrategy {
         
         try{
             DB::beginTransaction();
+            $params['performed_at'] = new Carbon($params['products'][0]['date']);
             $transaction = $this->createTransaction($params);
             foreach ($params['products'] as $product){
                 $batch = $this->batchService->createBatch([
                     'product_id' => $product['id'],
                     'quantity' => $product['quantity'],
                     'price' => $product['price'],
-                    'performed_at' => $product['date']??now(),
+                    'performed_at' => new Carbon($product['date'])??now(),
                     'code' => $product['code']??null
                 ]);
                 $transaction->batches()->attach($batch, [
@@ -42,6 +44,7 @@ class IncomeStrategy {
         }
         catch(\Exception $e){
             DB::rollBack();
+            dd($e);
             return [
                 'error' => $e->getMessage
             ];
@@ -51,7 +54,8 @@ class IncomeStrategy {
     public function createTransaction($params): Transaction
     {
         return $this->repo->create([
-            'type' => $params['type']
+            'type' => $params['type'],
+            'performed_at' => $params['performed_at'],
         ]);
     }
 }

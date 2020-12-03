@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\TransactionStoreRequest;
 use Sales\Transaction\Services\TransactionService;
-
+use Carbon\Carbon;
 class TransactionController extends Controller
 {
     private $service;
@@ -20,7 +20,14 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            'success' => 200,
+            'data' => $this->service->getAll([
+                'only'=>request()->get('only', false),
+                'date_from' => new Carbon(request()->get('date_from', now())),
+                'date_to' => new Carbon(request()->get('date_to', now())),
+            ])
+        ]);
     }
 
     /**

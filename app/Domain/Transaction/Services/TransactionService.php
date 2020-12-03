@@ -26,4 +26,12 @@ class TransactionService  extends AbstractService {
                 ];
         }
     }
+    public function getAll($filter_params = []): array
+    {
+        if($filter_params != []){
+            return $this->repo->getAllWithFilter($filter_params);
+        }else{
+            return $this->repo->getAll();
+        }
+    }
 }

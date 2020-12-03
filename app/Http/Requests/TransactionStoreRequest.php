@@ -58,6 +58,7 @@ class TransactionStoreRequest extends FormRequest
                 'date',
             ],
             "products.*.code" => [
+                'nullable',
                 "numeric",
             ]
         ];
